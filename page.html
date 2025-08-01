@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Generator</title>
+    <style>
+        body{
+            background-color: aqua;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            color: red;
+        }
+        #weight, #height {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button{
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            align-items: center;
+        }
+        .conclusion {
+            margin-top: 20px;
+            font-size: 1.2em;
+            padding: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: green;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+        <h1>BMI Calculator</h1>
+        <form id="bmiForm">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" required>
+            <br>
+            <label for="height">Height (cm):</label>
+            <input type="number" step="0.01" id="height" name="height" required>
+            <br>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        <div id="result"></div>
+        <div class="conclusion">
+            If Your BMI is less than 18.5, you are underweight.<br>
+            If Your BMI is between 18.5 and 24.9, you are normal weight.<br>
+            If Your BMI is between 25 and 29.9, you are overweight.<br>
+        </div>
+
+</body>
+<script>
+    function cal()
+    {
+    const f=document.getElementById('bmiForm');
+    f.addEventListener('submit', function(event)
+    {
+        event.preventDefault();
+        const w=parseFloat(document.getElementById('weight').value);
+        const h=parseFloat(document.getElementById('height').value);
+        const res=document.getElementById('result');
+        
+        if (h<=0||w<=0||isNaN(h)||isNaN(w))
+        {
+            res.innerText = 'Please enter valid numbers for weight and height.';
+            return;
+        }
+        if(h>220)
+        {
+            res.innerText = 'Height seems too high, please check your input.';
+            return;
+        }
+        if(w>250)
+        {
+            res.innerText=' Weight is too much. Only for humans or you need a different category.';
+            return;
+        }
+        
+        const bmi = (w)/((h*h)/10000);
+        res.innerText = `Your BMI is ${bmi.toFixed(2)}`;
+        if(bmi<18.5)
+        {
+            res.innerText+=' - You are underweight.';
+        } 
+        else if(bmi>=18.5 && bmi<25)
+        {
+            res.innerText+=' - You have a normal weight.';
+        } 
+        else if (bmi>=25 && bmi<30) 
+        {
+            res.innerText+=' - You are overweight.';
+        } 
+        else 
+        {
+            res.innerText+=' - You are obese.';
+        }
+    });
+}
+cal();
+</script>
+</html>
